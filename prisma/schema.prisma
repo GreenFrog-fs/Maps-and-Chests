@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://gen_user:2283454584aA@94.198.216.120:5432/default_db"
+}
+
+model Chest {
+  id        Int      @id @default(autoincrement())
+  points    Int   
+  name      String?
+  lat       Decimal
+  lon       Decimal
+
+  @@map("chest")
+}
+
+model User {
+  id        Int      @id @unique
+  points    Int   
+  chests    Int[]
+
+  @@map("webappuser")
+}
