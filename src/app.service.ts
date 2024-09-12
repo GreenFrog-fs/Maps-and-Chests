@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AppService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   getChests(lat: number, lon: number) {
     const distanceQuery = Prisma.sql`SELECT * FROM Chest WHERE 6371 * acos(cos(radians(${lat}))

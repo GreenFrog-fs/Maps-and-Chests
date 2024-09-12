@@ -20,7 +20,6 @@ model Chest {
 model User {
   id        Int      @id @unique
   points    Int   
-  chests    Int[]
 
   @@map("webappuser")
 }
