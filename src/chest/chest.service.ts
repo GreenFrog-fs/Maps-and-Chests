@@ -11,4 +11,12 @@ export class ChestService {
     });
     return result;
   }
+
+  async deactiveChest(id: number) {
+    const result = await this.prisma.chest.update({
+      where: { id },
+      data: { active: false },
+    });
+    return result;
+  }
 }
