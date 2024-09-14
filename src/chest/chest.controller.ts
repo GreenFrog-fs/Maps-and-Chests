@@ -1,9 +1,13 @@
 import { Controller, Get, Param, ParseIntPipe, Patch } from '@nestjs/common';
 import { ChestService } from './chest.service';
+import { UserService } from 'src/user/user.service';
 
 @Controller('chest')
 export class ChestController {
-  constructor(private readonly chestService: ChestService) {}
+  constructor(
+    private readonly chestService: ChestService,
+    private readonly userService: UserService,
+  ) {}
 
   @Get('')
   getActiveChests() {
@@ -11,9 +15,14 @@ export class ChestController {
     return this.chestService.getActiveChests();
   }
 
-  @Patch(':id/deactivate')
-  async deactiveChest(@Param('id', ParseIntPipe) id: number) {
-    console.log(`Запрос на деактивацию сундука с ID ${id}`);
-    return this.chestService.deactiveChest(id);
+  @Patch(':id/:user_id/deactivate')
+  async deactiveChest(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('user_id', ParseIntPipe) user_id: number,
+  ) {
+    console.log(`Запрос на деактивацию сундука и начисления бонуса`);
+    const chest = await this.chestService.deactiveChest(id);
+    const user = await this.userService.updateUserPoints(user_id, chest.points);
+    return { chest, user };
   }
 }

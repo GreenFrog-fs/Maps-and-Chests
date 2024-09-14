@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async findUserById(id: number) {
     const user = await this.prisma.user.findUnique({
@@ -18,6 +18,17 @@ export class UserService {
       data: {
         id,
         points: 0,
+      },
+    });
+  }
+
+  async updateUserPoints(id: number, pointsToAdd: number) {
+    return await this.prisma.user.update({
+      where: { id },
+      data: {
+        points: {
+          increment: pointsToAdd,
+        },
       },
     });
   }
