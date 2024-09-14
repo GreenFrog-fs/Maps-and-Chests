@@ -11,10 +11,11 @@ model Chest {
   id        Int      @id @default(autoincrement())
   points    Int   
   name      String?
+  active    Boolean
   lat       Decimal
   lon       Decimal
 
-  @@map("chest")
+  @@map("webappchest")
 }
 
 model User {
