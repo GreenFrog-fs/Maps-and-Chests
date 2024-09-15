@@ -9,9 +9,8 @@ export class ChestController {
     private readonly userService: UserService,
   ) {}
 
-  @Get('')
+  @Get('all')
   getActiveChests() {
-    console.log('запрос поиска сундуков');
     return this.chestService.getActiveChests();
   }
 
@@ -20,7 +19,6 @@ export class ChestController {
     @Param('id', ParseIntPipe) id: number,
     @Param('user_id', ParseIntPipe) user_id: number,
   ) {
-    console.log(`Запрос на деактивацию сундука и начисления бонуса`);
     const chest = await this.chestService.deactiveChest(id);
     const user = await this.userService.updateUserPoints(user_id, chest.points);
     return { chest, user };
