@@ -14,7 +14,7 @@ export class ChestController {
   constructor(
     private readonly chestService: ChestService,
     private readonly userService: UserService,
-  ) { }
+  ) {}
 
   @Get('all')
   getActiveChests() {
