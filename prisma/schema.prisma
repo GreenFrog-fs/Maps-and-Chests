@@ -19,7 +19,7 @@ model Chest {
 }
 
 model User {
-  id     Int @id @unique
+  id     BigInt @id @unique
   points Int
   AvatarToUser AvatarToUser[]
 
@@ -37,7 +37,7 @@ model Avatar {
 
 model AvatarToUser {
   id       Int    @id @default(autoincrement())
-  userid   Int
+  userid   BigInt
   avatarid Int
   user     User   @relation(fields: [userid], references: [id])
   avatar   Avatar @relation(fields: [avatarid], references: [id])
