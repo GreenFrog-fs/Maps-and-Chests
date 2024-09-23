@@ -8,19 +8,27 @@ datasource db {
 }
 
 model Chest {
-  id        Int      @id @default(autoincrement())
-  points    Int   
-  name      String?
-  active    Boolean
-  lat       Decimal
-  lon       Decimal
+  id     Int     @id @default(autoincrement())
+  points Int
+  name   String?
+  active Boolean
+  lat    Decimal
+  lon    Decimal
 
   @@map("webappchest")
 }
 
 model User {
-  id        Int      @id @unique
-  points    Int   
+  id     Int @id @unique
+  points Int
 
   @@map("webappuser")
+}
+
+model Avatar {
+  id    Int    @id @unique
+  src   String
+  price Int
+
+  @@map("webappavatars")
 }
