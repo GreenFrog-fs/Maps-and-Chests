@@ -3,9 +3,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
-  async findUserById(id: number) {
+  async findUserById(id: string) {
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
@@ -13,7 +13,7 @@ export class UserService {
     return user;
   }
 
-  async createUserById(id: number) {
+  async createUserById(id: string) {
     return await this.prisma.user.create({
       data: {
         id,
@@ -22,7 +22,7 @@ export class UserService {
     });
   }
 
-  async updateUserPoints(id: number, pointsToAdd: number) {
+  async updateUserPoints(id: string, pointsToAdd: number) {
     return await this.prisma.user.update({
       where: { id },
       data: {

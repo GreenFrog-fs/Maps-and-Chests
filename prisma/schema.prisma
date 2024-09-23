@@ -19,17 +19,17 @@ model Chest {
 }
 
 model User {
-  id     BigInt @id @unique
-  points Int
+  id           String         @id @unique
+  points       Int
   AvatarToUser AvatarToUser[]
 
   @@map("webappuser")
 }
 
 model Avatar {
-  id    Int    @id @unique
-  src   String
-  price Int
+  id           Int            @id @unique
+  src          String
+  price        Int
   AvatarToUser AvatarToUser[]
 
   @@map("webappavatars")
@@ -37,11 +37,11 @@ model Avatar {
 
 model AvatarToUser {
   id       Int    @id @default(autoincrement())
-  userid   BigInt
+  userid   String
   avatarid Int
   user     User   @relation(fields: [userid], references: [id])
   avatar   Avatar @relation(fields: [avatarid], references: [id])
 
-  @@map("webappavatartouser")
   @@unique([userid, avatarid])
+  @@map("webappavatartouser")
 }

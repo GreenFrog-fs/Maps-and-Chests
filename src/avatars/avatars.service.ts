@@ -3,13 +3,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AvatarsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async getAllAvatars() {
     return await this.prisma.avatar.findMany();
   }
 
-  async buyAvatar(userid: number, avatarid: number) {
+  async buyAvatar(userid: string, avatarid: number) {
     return this.prisma.$transaction(async (prisma) => {
       try {
         const user = await prisma.user.findUnique({
@@ -40,7 +40,7 @@ export class AvatarsService {
     });
   }
 
-  async getUserAvatars(userid: number) {
+  async getUserAvatars(userid: string) {
     return await this.prisma.avatarToUser.findMany({
       where: { userid },
       include: {
