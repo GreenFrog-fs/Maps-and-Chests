@@ -1,9 +1,10 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class ChestService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async getActiveChests() {
     const result = await this.prisma.chest.findMany({
@@ -25,5 +26,23 @@ export class ChestService {
       data: { active: false },
     });
     return result;
+  }
+
+  @Cron('0 0 * * *')
+  async updateChests() {
+    await this.prisma.$executeRawUnsafe(`
+      UPDATE webappchest
+      SET active = false;
+    `);
+    await this.prisma.$executeRawUnsafe(`
+      UPDATE webappchest
+      SET active = true
+      WHERE id IN (
+        SELECT id
+        FROM webappchest
+        ORDER BY RANDOM()
+        LIMIT 20
+      );
+    `);
   }
 }
